@@ -114,7 +114,7 @@ trainer = SFTTrainer(
         save_steps=500,
         save_total_limit=3,
         eval_strategy="steps",  # Add this for evaluation during training
-        eval_steps=500,  # Specify how often to evaluate
+        eval_steps=1,  # Specify how often to evaluate
         logging_dir="/data/tsolakidis/llama/logs",  # Directory for storing logs
     ),
 )
