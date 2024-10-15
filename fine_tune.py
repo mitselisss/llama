@@ -75,6 +75,16 @@ eval_dataset = dataset.select(range(train_size, len(dataset)))
 train_dataset = train_dataset.map(formatting_prompts_func, batched=True)
 eval_dataset = eval_dataset.map(formatting_prompts_func, batched=True)
 
+
+import numpy as np
+import evaluate
+
+metric = evaluate.load("accuracy")
+def compute_metrics(eval_pred):
+    logits, labels = eval_pred
+    predictions = np.argmax(logits, axis=-1)
+    return metric.compute(predictions=predictions, references=labels)
+
 # Set the trainer from hugingface library.
 trainer = SFTTrainer(
     model = model,
@@ -85,6 +95,7 @@ trainer = SFTTrainer(
     max_seq_length = max_seq_length,
     dataset_num_proc = 2,
     packing = False, # Can make training 5x faster for short sequences.
+    compute_metrics=compute_metrics,
     args = TrainingArguments(
         per_device_train_batch_size = 2,
         gradient_accumulation_steps = 4,
@@ -102,7 +113,7 @@ trainer = SFTTrainer(
         output_dir = "outputs",
         save_steps=500,
         save_total_limit=3,
-        evaluation_strategy="steps",  # Add this for evaluation during training
+        eval_strategy="steps",  # Add this for evaluation during training
         eval_steps=500,  # Specify how often to evaluate
         logging_dir="/data/tsolakidis/llama/logs",  # Directory for storing logs
     ),
