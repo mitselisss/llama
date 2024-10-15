@@ -79,7 +79,7 @@ eval_dataset = eval_dataset.map(formatting_prompts_func, batched=True)
 trainer = SFTTrainer(
     model = model,
     tokenizer = tokenizer,
-    train_dataset = dataset,
+    train_dataset = train_dataset,
     eval_dataset=eval_dataset,  # Add this line
     dataset_text_field = "text",
     max_seq_length = max_seq_length,
