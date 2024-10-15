@@ -90,8 +90,8 @@ trainer = SFTTrainer(
     model = model,
     train_dataset = train_dataset,
     eval_dataset=eval_dataset,  # Add this line
-    tokenizer = tokenizer,
-    dataset_text_field = "text",
+    #tokenizer = tokenizer,
+    #dataset_text_field = "text",
     #max_seq_length = max_seq_length,
     #dataset_num_proc = 2,
     #packing = False, # Can make training 5x faster for short sequences.
@@ -111,12 +111,12 @@ trainer = SFTTrainer(
         #lr_scheduler_type = "linear",
         #seed = 3407,
         output_dir = "outputs",
-        save_steps=500,
-        save_total_limit=3,
+        #save_steps=500,
+        #save_total_limit=3,
         eval_strategy="epoch",  # Add this for evaluation during training
-        logging_strategy="epoch",
-        eval_steps=500,  # Specify how often to evaluate
-        logging_dir="/data/tsolakidis/llama/logs",  # Directory for storing logs
+        #logging_strategy="epoch",
+        #eval_steps=500,  # Specify how often to evaluate
+        #logging_dir="/data/tsolakidis/llama/logs",  # Directory for storing logs
     ),
 )
 
