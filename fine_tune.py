@@ -63,6 +63,7 @@ pass
 #url = "generated_jsonls/dataset_created_from_nutrition_imits.jsonl"
 url = "generated_jsonls/dataset_created_from_weekly_plans_2.jsonl"
 dataset = load_dataset("json", data_files = {"train" : url}, split = "train")
+#dataset = dataset.map(formatting_prompts_func, batched = True,)
 
 # Split the dataset into train and eval
 train_size = int(0.8 * len(dataset))  # 80% for training
@@ -70,7 +71,9 @@ eval_size = len(dataset) - train_size  # Remaining 20% for evaluation
 train_dataset = dataset.select(range(train_size))
 eval_dataset = dataset.select(range(train_size, len(dataset)))
 
-#dataset = dataset.map(formatting_prompts_func, batched = True,)
+# Map the formatting function to both datasets
+train_dataset = train_dataset.map(formatting_prompts_func, batched=True)
+eval_dataset = eval_dataset.map(formatting_prompts_func, batched=True)
 
 # Set the trainer from hugingface library.
 trainer = SFTTrainer(
@@ -86,8 +89,8 @@ trainer = SFTTrainer(
         per_device_train_batch_size = 2,
         gradient_accumulation_steps = 4,
         warmup_steps = 5,
-        num_train_epochs = 1, # Set this for 1 full training run.
-        #max_steps = 60,
+        #num_train_epochs = 1, # Set this for 1 full training run.
+        max_steps = 60,
         learning_rate = 5e-4,
         fp16 = not is_bfloat16_supported(),
         bf16 = is_bfloat16_supported(),
