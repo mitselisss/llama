@@ -13,7 +13,7 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     max_seq_length = max_seq_length,
     dtype = dtype,
     load_in_4bit = load_in_4bit,
-    #cache_dir="C:\Users\dimit.tsolakidis\Desktop\llama 3.1",
+    cache_dir="/data/tsolakidis/llama/llama_3.1_model",
     # token = "hf_...", # use one if using gated models like meta-llama/Llama-2-7b-hf
 )
 
