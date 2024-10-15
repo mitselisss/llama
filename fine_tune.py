@@ -62,7 +62,7 @@ pass
 
 #url = "generated_jsonls/dataset_created_from_nutrition_imits.jsonl"
 url = "generated_jsonls/dataset_created_from_weekly_plans_2.jsonl"
-dataset = load_dataset("json", data_files = {"train" : url}, split = "train")
+dataset = load_dataset("json", data_files = {"train[:100]" : url}, split = "train")
 #dataset = dataset.map(formatting_prompts_func, batched = True,)
 
 # Split the dataset into train and eval
