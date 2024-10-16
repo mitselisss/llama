@@ -64,8 +64,8 @@ pass
 url = "generated_jsonls/dataset_created_from_weekly_plans_2.jsonl"
 dataset = load_dataset("json", data_files = {"train" : url}, split = "train")
 #dataset = dataset.map(formatting_prompts_func, batched = True,)
-# Select only the first 100 lines
-dataset = dataset.select(range(100))
+## Select only the first 100 lines
+#dataset = dataset.select(range(100))
 
 # Split the dataset into train and eval
 train_size = int(0.8 * len(dataset))  # 80% for training
